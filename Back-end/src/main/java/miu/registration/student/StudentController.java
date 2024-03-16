@@ -23,12 +23,14 @@ public class StudentController {
     @GetMapping("{studentId}")
     @Operation(summary = "Get registered courses",
             description = "This API will return registered courses for the studentId after Admin process registrations.")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<List<BlockCourse>> getMyCourses(@PathVariable("studentId") @Parameter(example = "617561") long studentId) {
         return ResponseEntity.ok(studentService.getCourses(studentId));
     }
 
     @PostMapping("{studentId}/{blockCourseId}")
     @Operation(summary = "Register for a block course")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<?> registerForCourse(@PathVariable("studentId") @Parameter(example = "617561") long studentId,
                                                @PathVariable("blockCourseId") @Parameter(example = "4") long blockCourseId) {
         return ResponseEntity.ok(studentService.registerCourse());

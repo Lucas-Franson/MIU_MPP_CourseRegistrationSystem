@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import miu.registration.course.BlockCourse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +22,7 @@ public class TeacherController {
 
     @GetMapping("{teacherName}")
     @Operation(summary = "Get courses of the Teacher")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<List<BlockCourse>> getMyCourses(@PathVariable @Parameter(example = "Obinna Kalu") String teacherName) {
         return ResponseEntity.ok(teacherService.getTeacherCourses(teacherName));
     }

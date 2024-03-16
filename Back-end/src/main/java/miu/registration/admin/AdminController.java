@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,12 +16,14 @@ public class AdminController {
 
     @PostMapping("process-registrations")
     @Operation(summary = "Process the registrations")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<?> processRegistrations() {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("reset-registrations")
     @Operation(summary = "Reset the registrations - for test")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<?> resetRegistrations() {
         return new ResponseEntity<>(HttpStatus.OK);
     }
