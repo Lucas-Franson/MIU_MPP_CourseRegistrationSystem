@@ -1,9 +1,9 @@
-package miu.registration.teacher;
+package miu.registration.course;
 
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TeacherRepository {
+public class CourseRepository {
 
     //TODO Database Access Code Here
 

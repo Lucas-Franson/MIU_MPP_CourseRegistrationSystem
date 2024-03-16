@@ -1,50 +1,22 @@
 package miu.registration.course;
 
+import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
+@Entity
 public class Block {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long blockId;
     private LocalDate startDate;
     private LocalDate endDate;
+
+    @OneToMany
     private List<BlockCourse> blockCourses;
 
-    public Block(long blockId, LocalDate startDate, List<BlockCourse> blockCourses) {
-        this.blockId = blockId;
-        this.startDate = startDate;
-        this.endDate = startDate.plusMonths(1);
-        this.blockCourses = blockCourses;
-    }
-
-    public long getBlockId() {
-        return blockId;
-    }
-
-    public void setBlockId(long blockId) {
-        this.blockId = blockId;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public List<BlockCourse> getBlockCourses() {
-        return blockCourses;
-    }
-
-    public void setBlockCourses(List<BlockCourse> blockCourses) {
-        this.blockCourses = blockCourses;
-    }
 }

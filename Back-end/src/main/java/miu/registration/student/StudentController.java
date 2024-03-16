@@ -23,9 +23,16 @@ public class StudentController {
     @GetMapping("{studentId}")
     @Operation(summary = "Get registered courses",
             description = "This API will return registered courses for the studentId after Admin process registrations.")
-    public ResponseEntity<List<BlockCourse>> getMyCourses(@PathVariable("studentId") @Parameter(example = "617561") long studentId) {
-        return ResponseEntity.ok(studentService.getCourses(studentId));
+    public ResponseEntity<String> getMyCourses(@PathVariable("studentId") @Parameter(example = "617561") long studentId) {
+        return ResponseEntity.ok("yey");
     }
+
+//    @GetMapping("{studentId}")
+//    @Operation(summary = "Get registered courses",
+//            description = "This API will return registered courses for the studentId after Admin process registrations.")
+//    public ResponseEntity<List<BlockCourse>> getMyCourses(@PathVariable("studentId") @Parameter(example = "617561") long studentId) {
+//        return ResponseEntity.ok(studentService.getCourses(studentId));
+//    }
 
     @PostMapping("{studentId}/{blockCourseId}")
     @Operation(summary = "Register for a block course")
