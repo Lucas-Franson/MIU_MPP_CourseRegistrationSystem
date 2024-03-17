@@ -1,61 +1,29 @@
 package miu.registration.student;
 
-import miu.registration.course.Block;
-import miu.registration.course.Course;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Data;
+import miu.registration.block.Block;
+import miu.registration.block.BlockCourse;
+
 import java.util.List;
 
+@Data
+@Entity(name = "STUDENT")
 public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String email;
-    private List<Course> courses;
+
+    @ManyToMany
+    @JsonIgnore
+    private List<BlockCourse> registeredCourses;
+
+    @OneToMany
+    @JsonIgnore
     private List<Block> blocks;
 
-    public Student(long id, String name, String email, List<Course> courses, List<Block> blocks) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.courses = courses;
-        this.blocks = blocks;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public List<Block> getBlocks() {
-        return blocks;
-    }
-
-    public void setBlocks(List<Block> blocks) {
-        this.blocks = blocks;
-    }
 }
