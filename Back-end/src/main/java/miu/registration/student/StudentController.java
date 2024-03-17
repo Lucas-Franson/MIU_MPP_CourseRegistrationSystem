@@ -22,9 +22,17 @@ public class StudentController {
 
     private final StudentService studentService;
 
+    @GetMapping
+    @Operation(summary = "Get list of all students",
+            description = "This API will return all preloaded students. Lucas ID = 26, David ID = 27")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Iterable<Student>> getAllStudents() {
+        return ResponseEntity.ok(studentService.getAllStudents());
+    }
+
     @GetMapping("{studentEmail}")
     @Operation(summary = "Get registered courses",
-            description = "This API will return registered courses for the studentEmail after Admin process registrations.")
+            description = "This API will return registered courses for the studentEmail after Admin process registrations.  Lucas ID = 26, David ID = 27")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<List<BlockCourse>> getMyCourses(@PathVariable("studentEmail") @Parameter(example = "e.davaatulga@miu.edu") String studentEmail) {
         return ResponseEntity.ok(studentService.getCourses(studentEmail));

@@ -22,6 +22,10 @@ public class StudentService {
     private final BlockCourseRepository blockCourseRepo;
     private final BlockRepository blockRepo;
 
+    public Iterable<Student> getAllStudents() {
+        return studentRepo.findAll();
+    }
+
     public List<BlockCourse> getCourses(String studentEmail) {
         return studentRepo.findByEmail(studentEmail)
                 .orElse(new Student())
