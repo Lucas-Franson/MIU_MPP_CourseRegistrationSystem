@@ -1,10 +1,7 @@
 package miu.registration.teacher;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public class TeacherRepository {
-
-    //TODO Database Access Code Here
-
+public interface TeacherRepository extends CrudRepository<Teacher, Long> {
+    Teacher findByEmail(String email);
 }

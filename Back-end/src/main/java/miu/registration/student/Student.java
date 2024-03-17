@@ -1,23 +1,29 @@
 package miu.registration.student;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import miu.registration.course.Block;
-import miu.registration.course.BlockCourse;
+import miu.registration.block.Block;
+import miu.registration.block.BlockCourse;
+
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "STUDENT")
 public class Student {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String email;
 
-    @OneToMany
-    private List<BlockCourse> courses;
+    @ManyToMany
+    @JsonIgnore
+    private List<BlockCourse> registeredCourses;
 
     @OneToMany
+    @JsonIgnore
     private List<Block> blocks;
+
 }

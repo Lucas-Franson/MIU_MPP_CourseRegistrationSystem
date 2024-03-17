@@ -1,18 +1,25 @@
 package miu.registration.teacher;
 
-import miu.registration.course.Block;
-import miu.registration.course.BlockCourse;
+import lombok.RequiredArgsConstructor;
+import miu.registration.block.BlockCourse;
+import miu.registration.block.BlockCourseService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TeacherService {
 
-    public List<BlockCourse> getTeacherCourses(String teacherName) {
-        return null;
+    private final TeacherRepository teacherRepository;
+    private final BlockCourseService blockCourseService;
+
+    public Iterable<Teacher> getTeachers() {
+        return teacherRepository.findAll();
+    }
+
+    public List<BlockCourse> getTeacherCourses(String teacherEmail) {
+        return blockCourseService.getBlockCoursesByTeacherId(teacherRepository.findByEmail(teacherEmail).getId());
     }
 
 }

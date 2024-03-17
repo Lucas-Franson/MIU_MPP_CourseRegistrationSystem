@@ -1,10 +1,9 @@
 package miu.registration.student;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public class StudentRepository {
+import java.util.Optional;
 
-    //TODO Database Access Code Here
-
+public interface StudentRepository extends CrudRepository<Student, Long> {
+    Optional<Student> findByEmail(String email);
 }

@@ -1,33 +1,35 @@
-package miu.registration.course;
+package miu.registration.block;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import miu.registration.course.Course;
 import miu.registration.student.Student;
 import miu.registration.teacher.Teacher;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@Entity
-@EqualsAndHashCode(callSuper = true)
-public class BlockCourse extends Course {
+@Entity(name = "BlOCK_COURSE")
+public class BlockCourse {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long blockCourseId;
+
+    @ManyToOne
+    private Course course;
+
     private int capacity;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private int enrolled;
     private String campusOrDE;
 
-    @OneToMany
+    @ManyToMany
     private List<Student> enrolledStudents;
 
-    @OneToOne
+    @ManyToOne
     private Teacher teacher;
 
-    @OneToOne
+    @ManyToOne
     private Block block;
+
 }
