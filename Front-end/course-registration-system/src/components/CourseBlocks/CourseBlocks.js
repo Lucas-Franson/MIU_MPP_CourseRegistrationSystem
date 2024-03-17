@@ -1,0 +1,60 @@
+import * as React from 'react';
+import { instance } from '../../services/StudentService';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from "@mui/material/Alert";
+import TableCourseBlocks from './TableCourseBlocks';
+
+export default function CourseBlocks() {
+
+    const [snackBar, setSnackBar] = React.useState({
+        openSnackBar: false,
+        vertical: 'top',
+        horizontal: 'right',
+    });
+    const [msg, setMsg] = React.useState('');
+    const [loadingCourses, setLoadingCourses] = React.useState(false);
+    const [registeredCourses, setRegisteredCourses] = React.useState([]);
+    const { openSnackBar, vertical, horizontal } = snackBar;
+    
+    React.useEffect(() => {
+        if (!loadingCourses) {
+          setLoadingCourses(true);
+          instance.get(`/student/${123}`).then(function ({ data }) {
+              console.log(data);
+              setRegisteredCourses(data);
+              setLoadingCourses(false);
+            })
+            .catch(function (error) {
+              setSnackBar({...snackBar, openSnackBar: true});
+              setLoadingCourses(false);
+              setMsg(error);
+            })
+        } 
+      }, []);
+
+    const handleClose = () => {
+        setSnackBar({ ...snackBar, openSnackBar: false });
+    }
+
+    return (
+        <>
+            <Snackbar
+                anchorOrigin={{ vertical, horizontal }}
+                open={openSnackBar}
+                onClose={handleClose}
+                autoHideDuration={6000}
+                message="I love snacks"
+                key={vertical + horizontal}
+            >
+                <Alert
+                    severity="warning"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                    >
+                    {msg}
+                </Alert>
+            </Snackbar>
+            <TableCourseBlocks courses={registeredCourses} />
+        </>
+    );
+}

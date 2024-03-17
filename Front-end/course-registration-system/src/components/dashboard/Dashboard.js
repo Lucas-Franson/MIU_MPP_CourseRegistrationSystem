@@ -15,10 +15,12 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems } from './ListItems';
-import { DataGrid } from '@mui/x-data-grid';
-import axios from 'axios';
-import { getRegisteredCourses } from '../../services/StudentService';
+import MainListItems from './ListItems';
+import CourseBlocks from '../CourseBlocks/CourseBlocks';
+import CoursesOffering from '../coursesOffering/coursesOffering';
+import Teacher from '../teacher/teacher';
+import Admin from '../admin/admin';
+
 
 function Copyright(props) {
   return (
@@ -79,46 +81,41 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-      field: 'firstName',
-      headerName: 'First name',
-      width: 150,
-    },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 110,
-    },
-  ];
-
-const rows = [
-    { id: 1, firstName: 'Jon', age: 14 },
-    { id: 2, firstName: 'Cersei', age: 31 },
-    { id: 3, firstName: 'Jaime', age: 31 }
-  ];
-
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
+  const [pageName, setPageName] = React.useState("Registered Courses");
+  const [page, setPage] = React.useState(<CourseBlocks />);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  React.useEffect(() => {
-    getRegisteredCourses(617561).then(function (response) {
-        // handle success
-        console.log(response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-    });
+  const redirect = (page) => {
+    switch(page) {
+      case "RegisteredCourses":
+        setPageName("Registered Courses");
+        setPage(<CourseBlocks />);
+        break;
+      case "CoursesOfferings":
+        setPageName("Courses Offerings");
+        setPage(<CoursesOffering />);
+        break;
+      case "Teacher":
+        setPageName("Teacher");
+        setPage(<Teacher />);
+        break;
+      case "Admin":
+        setPageName("Admin");
+        setPage(<Admin />);
+        break;
+      default:
+        setPage(<CourseBlocks />);
+        break;
+    }
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -149,7 +146,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              {pageName}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -168,7 +165,7 @@ export default function Dashboard() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            <MainListItems redirect={redirect} />
           </List>
         </Drawer>
         <Box
@@ -189,11 +186,9 @@ export default function Dashboard() {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                    <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        disableRowSelectionOnClick
-                    />
+
+                  {page}
+                
                 </Paper>
               </Grid>
             </Grid>
