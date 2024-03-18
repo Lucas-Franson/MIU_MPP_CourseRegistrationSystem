@@ -9,6 +9,7 @@ import miu.registration.student.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,6 @@ public class AdminService {
     public List<BlockCourse> processRegistrations() {
         var prioritizations = getPrioritizations();
         var blockCourses = getBlockCourses();
-
         for (BlockCourse blockCourse : blockCourses) {
             for (int priority = 1; priority <= 4; priority++) {
                 final int finalPriority = priority;
