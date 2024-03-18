@@ -12,7 +12,6 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MainListItems from './ListItems';
@@ -20,20 +19,8 @@ import CourseBlocks from '../CourseBlocks/CourseBlocks';
 import CoursesOffering from '../coursesOffering/coursesOffering';
 import Teacher from '../teacher/teacher';
 import Admin from '../admin/admin';
-
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://compro.miu.edu/">
-        MIU Students
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../copyright/Copyright';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 240;
 
@@ -84,7 +71,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function Dashboard({ redirect }) {
   const [open, setOpen] = React.useState(true);
   const [pageName, setPageName] = React.useState("Registered Courses");
   const [page, setPage] = React.useState(<CourseBlocks />);
@@ -93,7 +80,7 @@ export default function Dashboard() {
     setOpen(!open);
   };
 
-  const redirect = (page) => {
+  const redirectBar = (page) => {
     switch(page) {
       case "RegisteredCourses":
         setPageName("Registered Courses");
@@ -115,6 +102,11 @@ export default function Dashboard() {
         setPage(<CourseBlocks />);
         break;
     }
+  }
+
+  const logout = () => {
+    localStorage.removeItem("email");
+    redirect(false);
   }
 
   return (
@@ -148,6 +140,9 @@ export default function Dashboard() {
             >
               {pageName}
             </Typography>
+            <IconButton onClick={logout} color="inherit">
+              <LogoutIcon />
+            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -165,7 +160,7 @@ export default function Dashboard() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <MainListItems redirect={redirect} />
+            <MainListItems redirect={redirectBar} />
           </List>
         </Drawer>
         <Box

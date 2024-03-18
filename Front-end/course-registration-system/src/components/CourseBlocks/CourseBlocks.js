@@ -19,7 +19,8 @@ export default function CourseBlocks() {
     React.useEffect(() => {
         if (!loadingCourses) {
           setLoadingCourses(true);
-          instance.get(`/student/${123}`).then(function ({ data }) {
+          let email = localStorage.getItem('email');
+          instance.get(`/student/${email}`).then(function ({ data }) {
               console.log(data);
               setRegisteredCourses(data);
               setLoadingCourses(false);
@@ -27,7 +28,7 @@ export default function CourseBlocks() {
             .catch(function (error) {
               setSnackBar({...snackBar, openSnackBar: true});
               setLoadingCourses(false);
-              setMsg(error);
+              setMsg(error.message);
             })
         } 
       }, []);
@@ -43,7 +44,7 @@ export default function CourseBlocks() {
                 open={openSnackBar}
                 onClose={handleClose}
                 autoHideDuration={6000}
-                message="I love snacks"
+                message={msg}
                 key={vertical + horizontal}
             >
                 <Alert

@@ -36,10 +36,12 @@ function Row(props) {
                         <Table size="small" aria-label="purchases">
                             <TableHead>
                                 <TableRow>
+                                    <TableCell>ID</TableCell>
                                     <TableCell>Title</TableCell>
-                                    <TableCell>Description</TableCell>
                                     <TableCell>Teacher</TableCell>
                                     <TableCell>Format</TableCell>
+                                    <TableCell>Capacity</TableCell>
+                                    <TableCell>Enrolled</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -47,11 +49,13 @@ function Row(props) {
                                     courses.filter(x => x.block.blockId === block.blockId).map((course) => (
                                     <TableRow key={course.blockCourseId}>
                                         <TableCell component="th" scope="row">
-                                            {course.title}
+                                            {course.course.id}
                                         </TableCell>
-                                        <TableCell>{course.description}</TableCell>
+                                        <TableCell>{course.course.title}</TableCell>
                                         <TableCell>{course.teacher?.name}</TableCell>
                                         <TableCell>{course.campusOrDE}</TableCell>
+                                        <TableCell>{course.capacity}</TableCell>
+                                        <TableCell>{course.enrolled}</TableCell>
                                     </TableRow>
                                 )) : (
                                     <TableRow key={123}>
