@@ -22,12 +22,6 @@ export default function MainListItems({redirect}) {
         </ListItemIcon>
         <ListItemText primary="Courses Offerings" />
       </ListItemButton>
-      <ListItemButton onClick={() => redirect("Teacher")}>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Teacher" />
-      </ListItemButton>
       <ListItemButton onClick={() => redirect("Admin")}>
         <ListItemIcon>
           <AdminPanelSettingsIcon />
