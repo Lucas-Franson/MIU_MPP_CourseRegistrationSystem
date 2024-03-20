@@ -9,8 +9,8 @@ import miu.registration.student.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +29,7 @@ public class AdminService {
             for (int priority = 1; priority <= 4; priority++) {
                 final int finalPriority = priority;
                 var prioritizationList = prioritizations.stream()
-                        .filter(p -> p.getBlockCourse().equals(blockCourse))
+                        .filter(p -> p.getBlockCourse().getBlock().getBlockId() == blockCourse.getBlock().getBlockId())
                         .filter(p -> p.getPriority() == finalPriority)
                         .collect(Collectors.toList());
 
