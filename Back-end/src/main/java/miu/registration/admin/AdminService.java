@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +24,9 @@ public class AdminService {
     public List<BlockCourse> processRegistrations() {
         var prioritizations = getPrioritizations();
         var blockCourses = getBlockCourses();
-        for (BlockCourse blockCourse : blockCourses) {
-            for (int priority = 1; priority <= 4; priority++) {
+
+        for (int priority = 1; priority <= 4; priority++) {
+            for (BlockCourse blockCourse : blockCourses) {
                 final int finalPriority = priority;
                 var prioritizationList = prioritizations.stream()
                         .filter(p -> p.getBlockCourse().getBlock().getBlockId() == blockCourse.getBlock().getBlockId())
@@ -49,6 +49,9 @@ public class AdminService {
                             .anyMatch(c -> c.getBlock().equals(blockCourse.getBlock()))) {
                         continue;
                     }
+
+                    if (!prioritization.getBlockCourse().equals(blockCourse))
+                        continue;
 
                     blockCourse.setEnrolled(blockCourse.getEnrolled() + 1);
                     // Set enrolled students in block course
